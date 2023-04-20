@@ -6,6 +6,9 @@ void strmatch(char text[20],char pat[20]){
     a=strlen(pat);
     b=strlen(text);
 
+
+
+
     
     for(int i=0;i<=b-a;i++){
         int j;
