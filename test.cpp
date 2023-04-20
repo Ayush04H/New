@@ -1,29 +1,51 @@
-// C++ program to find Minimum
-// number of jumps to reach end
-#include <bits/stdc++.h>
-using namespace std;
 
-int minJumps(int arr[], int n)
-{
+#include<stdio.h>
 
-	if (n == 1)
-		return 0;
-	int res = INT_MAX;
-	for (int i = n - 2; i >= 0; i--) {
-		if (i + arr[i] >= n - 1) {
-			int sub_res = minJumps(arr, i + 1);
-			if (sub_res != INT_MAX)
-				res = min(res, sub_res + 1);
-		}
-	}
-
-	return res;
+int max(int a, int b) {
+   if(a>b){
+      return a;
+   } else {
+      return b;
+   }
 }
-int main()
-{
-	int arr[] = { 1, 3, 5, 8, 9, 2, 6, 7, 6, 8, 9 };
-	int n = sizeof(arr) / sizeof(arr[0]);
-	cout << "Minimum number of jumps to";
-	cout << " reach the end is " << minJumps(arr, n);
-	return 0;
+int knapsack(int W, int wt[], int val[], int n) {
+   int i, w;
+   int knap[n+1][W+1];
+   for (i = 0; i <= n; i++) {
+      for (w = 0; w <= W; w++) {
+         if (i==0 || w==0)
+            knap[i][w] = 0;
+         else if (wt[i-1] <= w)
+            knap[i][w] = max(val[i-1] + knap[i-1][w-wt[i-1]], knap[i-1][w]);
+         else
+            knap[i][w] = knap[i-1][w];
+      }
+   }
+   return knap[n][W];
+}
+int main() {
+ //size=3;
+
+   int wt[3];
+   int val[3];
+   int W ;
+
+   printf("\n Enter the values in Val array :");
+   for(int i=0;i<3;i++){
+      scanf("%d",&val[i]);
+   }
+
+   printf("\n Enter the values in Weight array :");
+   for(int i=0;i<3;i++){
+     scanf("%d",&wt[i]);
+   }
+
+    printf("\n Enter the value of capacity :");
+   scanf("%d",&W);
+   
+
+
+   int n = sizeof(val)/sizeof(val[0]);
+   printf(" \n The solution is : %d ", knapsack(W, wt, val, n));
+   return 0;
 }
