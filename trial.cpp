@@ -1,44 +1,45 @@
-#include<bits/stdc++.h>
+//prims algo code
+// Prim's Algorithm in C++
+#include <bits/stdc++.h>
 using namespace std;
-void enter(int a[],int n){
-    cout<<"Enter the values in t he array "<<endl;
-    for(int i=0;i<n;i++){
-        cin>>a[i];
-    }
-}
-void disp(int a[],int n){
-    cout<<"The elements of the array are"<<endl;
-    for(int i=0;i<n;i++){
-        cout<<a[i]<<" ";
-    }
-    cout<<endl;
-}
-void selectionsort(int a[],int n){
-    int i,j,k,c;
-    for(i=0;i<n-1;i++){
-        k=i;
-        for(j=i+1;j<n;j++){
-            if(a[k]>a[j]){
-                k=j;
+#define INF 9999999
+// number of vertices in graph
+#define V 4
+// create a 2d array of size 4*4
+//for adjacency matrix to represent graph
+
+int G[V][V] = {
+  {0,1,3,4},
+  {1,0,2,0},
+  {3,2,0,5},
+  {4,0,5,0}};
+
+int main(){
+    int no_edge=0;
+    int selected[V];
+    memset(selected,false,sizeof(selected));
+    selected[0]=true;
+    int x,y;
+    cout<<"Edge - Weight\n";
+    while(no_edge<V-1){
+        int min=INF;
+        x=0;
+        y=0;
+        for(int i=0;i<V;i++){
+            if(selected[i]){
+                for(int j=0;j<V;j++){
+                    if(!selected[j] && G[i][j]){
+                        if(min>G[i][j]){
+                            min=G[i][j];
+                            x=i;
+                            y=j;
+                        }
+                    }
+                }
             }
         }
-        if(k!=i){
-            c=a[i];
-            a[i]=a[k];
-            a[k]=c;
-        }
+        cout<<x<<" - "<<y<<"  :"<<G[x][y]<<endl;
+        selected[y]=true;
+        no_edge++;
     }
-}
-int main(){
-    int n;
-    cout<<"Enter the number of the elements"<<endl;
-    cin>>n;
-    int a[n];
-    enter(a,n);
-    cout<<"1.Elements before sorting::\n";
-    disp(a,n);
-    selectionsort(a,n);
-    cout<<"2.Elements after sorting1::\n";
-    disp(a,n);
-    return 0;
 }
